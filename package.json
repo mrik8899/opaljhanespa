@@ -9,15 +9,35 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.3.2"
+    "@tanstack/react-query": "^5.81.5",
+    "@tsparticles/basic": "^3.8.1",
+    "@tsparticles/engine": "^3.0.2",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "3.0.2",
+    "framer-motion": "^12.15.0",
+    "lottie-react": "^2.4.1",
+    "lucide-react": "^0.511.0",
+    "next": "^14.2.29",
+    "next-pwa": "^5.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-intersection-observer": "^9.16.0",
+    "react-swipeable": "^7.0.2",
+    "react-tsparticles": "^2.12.2",
+    "react-use-measure": "^2.1.7",
+    "sharp": "^0.34.3",
+    "tsparticles": "^3.8.1",
+    "tsparticles-preset-stars": "^2.12.0",
+    "tsparticles-slim": "^2.12.0",
+    "web-vitals": "^5.0.3",
+    "workbox-window": "^7.3.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.2",
-    "@eslint/eslintrc": "^3"
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
+    "tailwindcss": "^3.4.17"
   }
 }

@@ -1,0 +1,83 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: 'class', // <--- THIS IS THE ONLY LINE ADDED FOR DARK MODE
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}", // Add this line if you're using the 'app' directory structure (Next.js 13+)
+    "./src/**/*.{js,ts,jsx,tsx,mdx}", // Add this line to ensure components in 'src' are scanned
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Adding brand colors (YOUR EXISTING COLORS)
+        'brand': {
+          'green': '#39AD48',
+          'blue': '#AFDCEC',
+          'lime': '#BEFD73',
+          'yellow': '#F7D560',
+          'purple': '#B784A7',
+          'dark-purple': '#3C1F76',
+          'gray': '#D6D6D1',
+        },
+      },
+      animation: {
+        // YOUR EXISTING ANIMATIONS
+        'blob': 'blob 7s infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'shimmer': 'shimmer 3s ease-out infinite',
+        
+        // NEW ANIMATION FOR SCROLL INDICATOR
+        'bounce-slow': 'bounce-slow 3s infinite', // 3 seconds per bounce cycle
+      },
+      backgroundImage: {
+        // YOUR EXISTING BACKGROUND IMAGES
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))', // This is for `bg-gradient-radial`
+        
+        // NEW CUSTOM RADIAL GRADIENT FOR HERO VIGNETTE
+        'radial-gradient': 'radial-gradient(var(--tw-gradient-stops))', // This will be used with `bg-radial-gradient`
+      },
+      boxShadow: {
+        // YOUR EXISTING BOX SHADOWS
+        'glow': '0 0 40px rgba(57, 173, 72, 0.4)', // Updated to use brand green color
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.5)',
+        
+        // NEW CUSTOM BOX SHADOW FOR HERO BUTTON
+        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2)',
+      },
+      // NEW: Custom text-shadow utilities
+      textShadow: {
+        'sm': '0 1px 2px var(--tw-shadow-color)',
+        'md': '0 2px 4px var(--tw-shadow-color)',
+        'lg': '0 8px 16px var(--tw-shadow-color)',
+      },
+      // NEW: Custom keyframes for the slower bounce animation
+      keyframes: {
+        'bounce-slow': {
+          '0%, 100%': { transform: 'translateY(-10%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+          '50%': { transform: 'none', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
+        }
+        // If you have other keyframes for 'blob', 'float', 'shimmer', ensure they are also defined here.
+        // For example:
+        // 'blob': { /* your blob keyframes */ },
+        // 'float': { /* your float keyframes */ },
+        // 'shimmer': { /* your shimmer keyframes */ },
+      },
+    },
+  },
+  plugins: [
+    // NEW: Plugin for text-shadow
+    function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') }
+      );
+    },
+    // Keep any other plugins you might have here. For example:
+    // require('@tailwindcss/typography'),
+  ],
+};

@@ -1,0 +1,396 @@
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- CRITICAL FIXES FOR FULL-SCREEN HERO & NO GAPS --- */
+/* Ensure html, body, and Next.js root div take full height and have no default margins/paddings */
+html, body, #__next {
+  margin: 0 !important; /* Forces removal of any default margins */
+  padding: 0 !important; /* Forces removal of any default paddings */
+  height: 100%; /* Ensures they take 100% of parent height */
+  min-height: 100%; /* Robustness for full height */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  /* DO NOT set overflow-y: hidden here. Hero.js manages its own overflow,
+      and we need overall page scrolling for content below the hero. */
+}
+/* --- END CRITICAL FIXES --- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Default (Light) Body Background */
+  body {
+    @apply text-gray-900; /* Default text color for light mode */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #6B8DD6 50%, #8E37D7 75%, #667eea 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    background-attachment: fixed;
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark Mode Body Background */
+  /* =============================================================== */
+  html.dark body {
+    @apply text-gray-100; /* Text color for dark mode */
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 25%, #2A2A2A 50%, #1A1A1A 75%, #0A0A0A 100%); /* Darker, more subtle gradient */
+    background-size: 400% 400%; /* Keep animation properties */
+    animation: gradientShift 15s ease infinite;
+    background-attachment: fixed;
+  }
+  /* =============================================================== */
+
+  .hero-text-clip {
+    position: relative; /* Needed for z-index with siblings like video */
+    z-index: 1; /* Make sure text is above the video */
+    background-color: white; /* Fallback/base color (won't be seen) */
+    color: transparent; /* Makes the text itself transparent */
+    -webkit-background-clip: text; /* Safari/Chrome specific */
+    background-clip: text; /* Standard property */
+    -webkit-text-fill-color: transparent; /* Safari/Chrome specific */
+    text-fill-color: transparent; /* Standard property */
+    /* Add properties for gradient if you want, but video will override */
+  }
+}
+
+@layer components {
+  /* Glass morphism card */
+  .glass-card {
+    background-color: rgba(0, 0, 0, 0.3); /* Adjust transparency as needed */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Optional subtle shadow */
+    @apply backdrop-blur-xl; /* Added from your earlier code */
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific glass card styles */
+  /* =============================================================== */
+  html.dark .glass-card {
+    @apply bg-white/5 border-white/10 shadow-lg; /* More subtle in dark mode */
+  }
+  /* =============================================================== */
+
+  .glass-card-hover {
+    @apply hover:bg-white/15 hover:border-white/30 hover:shadow-3xl transition-all duration-500;
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific glass card hover styles */
+  /* =============================================================== */
+  html.dark .glass-card-hover {
+    @apply hover:bg-white/10 hover:border-white/20 hover:shadow-xl; /* More subtle hover in dark mode */
+  }
+  /* =============================================================== */
+
+  /* Text shadows for readability */
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Glass morphism card - Elevated */
+  .glass-card-elevated {
+    background-color: rgba(255, 255, 255, 0.05); /* Very subtle white for transparency */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Stronger shadow for "elevated" */
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific elevated glass card styles */
+  /* =============================================================== */
+  html.dark .glass-card-elevated {
+    background-color: rgba(0, 0, 0, 0.2); /* Slightly darker transparency in dark mode */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Lighter border */
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
+  }
+  /* =============================================================== */
+
+  /* Optional: Deeper shadows for a more luxurious feel */
+  .shadow-3xl {
+    box-shadow: 0 20px 60px -5px rgba(0, 0, 0, 0.4), 0 10px 30px -5px rgba(0, 0, 0, 0.25);
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific shadow */
+  /* =============================================================== */
+  html.dark .shadow-3xl {
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.5), 0 5px 20px -5px rgba(0, 0, 0, 0.3);
+  }
+  /* =============================================================== */
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific gradient text */
+  /* =============================================================== */
+  html.dark .gradient-text {
+    @apply bg-gradient-to-r from-purple-300 via-pink-300 to-indigo-300 bg-clip-text text-transparent; /* Slightly lighter for contrast */
+  }
+  /* =============================================================== */
+
+  /* Custom shadows */
+  .shadow-glow {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific glow */
+  /* =============================================================== */
+  html.dark .shadow-glow {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); /* A bit more intense in dark */
+  }
+  /* =============================================================== */
+
+  /* Glass Nebula Effect - Enhanced */
+  .glass-nebula-effect {
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly less opaque for better backdrop visibility */
+    backdrop-filter: blur(25px) brightness(1.2) saturate(1.5); /* Stronger blur, brighter, more saturated */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* More prominent border for definition */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Deeper shadow, clearer inner line */
+    transition: all 0.5s ease-out;
+    position: relative; /* Required for ::before/::after positioning */
+    z-index: 1; /* Ensure it stays above other background layers if used elsewhere */
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific glass nebula effect */
+  /* =============================================================== */
+  html.dark .glass-nebula-effect {
+    background-color: rgba(0, 0, 0, 0.3); /* Darker base for dark mode */
+    backdrop-filter: blur(20px) brightness(0.8) saturate(1.0); /* Slightly less bright/saturated */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* More subtle border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Deeper shadow */
+  }
+  /* =============================================================== */
+
+  /* Pseudo-elements for layered glass depth and refraction hints - Enhanced */
+  .glass-nebula-effect::before,
+  .glass-nebula-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1; /* Ensures they are behind content, within the glass layer */
+    background-blend-mode: overlay; /* Helps with a more ethereal blend */
+  }
+
+  .glass-nebula-effect::before {
+    backdrop-filter: blur(7px); /* Slightly stronger secondary blur */
+    background: radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 70%); /* Stronger light source */
+    transform: translateZ(-1px);
+    animation: light-refraction 10s infinite ease-in-out alternate;
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific pseudo-element before */
+  /* =============================================================== */
+  html.dark .glass-nebula-effect::before {
+    background: radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.05) 0%, transparent 70%); /* More subtle light */
+  }
+  /* =============================================================== */
+
+  .glass-nebula-effect::after {
+    backdrop-filter: blur(10px); /* Even stronger third blur */
+    background: radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.08) 0%, transparent 60%); /* Another strong light source */
+    transform: translateZ(-2px);
+    animation: light-refraction 12s infinite ease-in-out alternate-reverse;
+  }
+
+  /* =============================================================== */
+  /* NEW: Dark mode specific pseudo-element after */
+  /* =============================================================== */
+  html.dark .glass-nebula-effect::after {
+    background: radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.03) 0%, transparent 60%); /* More subtle light */
+  }
+  /* =============================================================== */
+
+}
+
+@layer utilities {
+  /* Animation delays */
+  .animation-delay-1000 { animation-delay: 1s; }
+  .animation-delay-2000 { animation-delay: 2s; }
+  .animation-delay-3000 { animation-delay: 3s; }
+  .animation-delay-4000 { animation-delay: 4s; }
+  .animation-delay-5000 { animation-delay: 5s; }
+  .animation-delay-6000 { animation-delay: 6s; }
+
+  /* Utilities for `scrollbar-hide` */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none; /* For Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+}
+
+/* --- Animations --- */
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fogMove {
+  0% {
+    transform: translateX(-10%) translateY(0%);
+  }
+  50% {
+    transform: translateX(5%) translateY(-2%);
+  }
+  100% {
+    transform: translateX(-10%) translateY(0%);
+  }
+}
+
+@keyframes fogDrift1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes fogDrift2 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-30%); }
+}
+@keyframes fogDrift3 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20%); }
+}
+
+@keyframes slowfade {
+  0%, 100% { opacity: 0.1 }
+  50% { opacity: 0.2 }
+}
+
+@keyframes pulse-slow { /* Consolidated and kept the more subtle version */
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4; /* Adjusted from 0.1 for slightly more visibility */
+  }
+  50% {
+    transform: scale(1.05); /* Slightly less aggressive than 1.6 */
+    opacity: 1; /* Adjusted from 0.15 for better pulse effect */
+  }
+}
+
+@keyframes pulse-medium {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.07); opacity: 0.15; }
+}
+
+/* Keyframes for light refraction animation (for glass-nebula-effect) */
+@keyframes light-refraction {
+  0% {
+    background-position: 0% 0%;
+    opacity: 0.8;
+  }
+  50% {
+    background-position: 100% 100%;
+    opacity: 1;
+  }
+  100% {
+    background-position: 0% 0%;
+    opacity: 0.8;
+  }
+}
+
+/* --- Animation Classes --- */
+.animate-blob {
+  animation: blob 7s infinite cubic-bezier(0.6, 0.4, 0.4, 0.8);
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-out infinite;
+}
+
+.animate-fogMove {
+  animation: fogMove 60s ease-in-out infinite;
+}
+
+.animate-slow-fade {
+  animation: slowfade 18s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2.5s ease-in-out infinite;
+}
+
+/* In your globals.css or equivalent */
+.glass-card {
+  background-color: rgba(0, 0, 0, 0.3); /* Adjust transparency as needed */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Optional subtle shadow */
+  @apply backdrop-blur-xl; /* Added from your earlier code */
+}
+
+/* Optional: Add glow effect for hover */
+.hover\:shadow-glow:hover {
+  box-shadow: 0 0 15px rgba(190, 253, 115, 0.6), 0 0 30px rgba(175, 220, 236, 0.4);
+}
+
+/* =============================================================== */
+/* NEW: Dark mode specific glow on hover */
+/* =============================================================== */
+html.dark .hover\:shadow-glow:hover {
+  box-shadow: 0 0 10px rgba(190, 253, 115, 0.8), 0 0 20px rgba(175, 220, 236, 0.6); /* Brighter in dark mode */
+}
+/* =============================================================== */
