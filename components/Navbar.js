@@ -150,16 +150,13 @@ export default function Navbar() {
     }
 
     if (isHoverDevice) {
-      // On desktop (hover-capable device): hide unless mouse is at the top
-      if (!isMouseAtTop) {
-        headerClasses += ` -translate-y-full opacity-0`; // Slide up completely and fade out
-      } else {
-        headerClasses += ` translate-y-0 opacity-100`; // Slide down to show and fade in
-      }
-    } else {
-      // On mobile/touch device (no hover): always visible when scrolled, NO glass effect
-      headerClasses += ` translate-y-0 opacity-100`;
-    }
+  // On desktop (hover-capable device): always visible, no auto-hide
+  headerClasses += ` translate-y-0 opacity-100`;
+} else {
+  // On mobile/touch device: keep original behavior
+  headerClasses += ` translate-y-0 opacity-100`;
+}
+
   } else {
     // If not scrolled (within the first 80px): always transparent and visible for ALL devices
     headerClasses += ` bg-transparent translate-y-0 opacity-100`;

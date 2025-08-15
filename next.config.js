@@ -5,6 +5,7 @@ const withPWA = require('next-pwa')({
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
   buildExcludes: [/middleware-manifest\.json$/],
+  maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // <-- allow caching files up to 10 MB
   runtimeCaching: [
     {
       urlPattern: /^https?:\/\/fonts\.googleapis\.com/,

@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import '../styles/globals.css';
 import UpdateNotification from '../components/UpdateNotification';
+import useProtectSite from '@/lib/useProtectSite';
 
 // Service Worker Registration
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
@@ -61,15 +62,14 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light'); // Default to light
 
   useEffect(() => {
-    // Load theme from localStorage on initial mount
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      // Check for user's system preference if no theme saved
-      setTheme('dark');
-    }
-  }, []);
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    setTheme(savedTheme); // Use previously saved theme if exists
+  } else {
+    setTheme('light'); // Force light mode on first visit
+  }
+}, []);
+
 
   useEffect(() => {
     // Apply the 'dark' class to the html element based on theme state
@@ -113,10 +113,12 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
 }
 
 function MyApp({ Component, pageProps }) {
+  useProtectSite();
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [showBgToggle, setShowBgToggle] = useState(false);
-  
+
+
   useEffect(() => {
     // Set a minimum loading time for better UX
     const timer = setTimeout(() => {
