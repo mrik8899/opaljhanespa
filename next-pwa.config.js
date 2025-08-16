@@ -1,7 +1,7 @@
 /** @type {import('next-pwa').PWAConfig} */
 module.exports = {
   dest: 'public', // Service worker and precache files will go here
-  register: true, // Auto-register service worker
+  register: false, // Auto-register service worker
   skipWaiting: true, // Immediately activate new SW
   disable: process.env.NODE_ENV === 'development', // Disable in dev
   maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB for large images

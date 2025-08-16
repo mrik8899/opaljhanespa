@@ -8,6 +8,7 @@ import UpdateNotification from '../components/UpdateNotification';
 import useProtectSite from '@/lib/useProtectSite';
 
 // Service Worker Registration
+/*
 if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   window.workbox = window.workbox || {};
   
@@ -18,7 +19,7 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
     }
   });
 }
-
+*/
 // ===============================================================
 // Background Context
 // ===============================================================
@@ -105,11 +106,11 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   window.workbox.precaching = window.workbox.precaching || {};
   
   // Skip waiting for service worker updates
-  self.addEventListener('message', (event) => {
+/*  self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
       self.skipWaiting();
     }
-  });
+  }); */
 }
 
 function MyApp({ Component, pageProps }) {
